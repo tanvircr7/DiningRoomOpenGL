@@ -64,7 +64,7 @@ static GLubyte florindices[4][4] =
 
 
 
-static GLfloat colors[9][3] =
+static GLfloat colors[10][3] =
 {
     //polygon colors
     {1.0, 1.0, 1.0},
@@ -76,7 +76,8 @@ static GLfloat colors[9][3] =
     {1.0f, 1.0f, 0.0f}, //yellow
     {0.0, 0.0, 1.0}, //blue
     {1.0, 0.5, 0.0}, //idk what color
-    {0.002, 0.6, 0.98} // bluish hue
+    {0.002, 0.6, 0.98}, // bluish hue
+    {0.4, 0.2, 0.0} //brown
 };
 
 
@@ -114,65 +115,6 @@ void drawCube()
 }
 
 
-/*
-
-void drawwindow()
-{
-    //glColor3f(1,0,0);
-
-
-
-
-    for (GLint i = 0; i <1; i++)
-    {glBegin(GL_QUADS);
-        glColor3f(colors[i+2][0],colors[i+2][1],colors[i+2][2]);
-        glVertex3fv(&v_window[winindices[i][0]][0]);
-        glVertex3fv(&v_window[winindices[i][1]][0]);
-        glVertex3fv(&v_window[winindices[i][2]][0]);
-        glVertex3fv(&v_window[winindices[i][3]][0]);
-
-        glEnd();
-
-    }
-
-
-}
-void drawcube(int i)
-{
-    //glColor3f(1,0,0);
-
-
-    if(i==1)
-    {
-        for (GLint i = 0; i <6; i++)
-        {glBegin(GL_QUADS);
-            glColor3f(colors[i+2][0],colors[i+2][1],colors[i+2][2]);
-            glVertex3fv(&v_pyramid[quadIndices[i][0]][0]);
-            glVertex3fv(&v_pyramid[quadIndices[i][1]][0]);
-            glVertex3fv(&v_pyramid[quadIndices[i][2]][0]);
-            glVertex3fv(&v_pyramid[quadIndices[i][3]][0]);
-
-            glEnd();
-
-        }
-    }
-    else if(i==2)
-    {
-        for (GLint i = 0; i <6; i++)
-        {glBegin(GL_QUADS);
-            glColor3f(colors[i+2][0],colors[i+2][1],colors[i+2][2]);
-            glVertex3fv(&v_sink[sinkindices[i][0]][0]);
-            glVertex3fv(&v_sink[sinkindices[i][1]][0]);
-            glVertex3fv(&v_sink[sinkindices[i][2]][0]);
-            glVertex3fv(&v_sink[sinkindices[i][3]][0]);
-
-            glEnd();
-
-        }
-    }
-
-}
-*/
 
 void display(void)
 {
@@ -198,7 +140,91 @@ void display(void)
 
     drawWall();
 
+
+
+
+    // right sofa
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(6,0,2);
+    //glRotatef(22, 0,0,1);
+    glScalef(2, 1, 5);
     drawCube();
+    glPopMatrix();
+
+    // right top sofa
+    glColor3f(0,0,0);
+    glPushMatrix();
+    glTranslatef(7.5,1,2);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.5, 1, 5);
+    drawCube();
+    glPopMatrix();
+
+
+
+    // top sofa
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(2,0,1);
+    //glRotatef(22, 0,0,1);
+    glScalef(3, 1, 2);
+    drawCube();
+    glPopMatrix();
+
+    // top top sofa
+    glColor3f(0,0,0);
+    glPushMatrix();
+    glTranslatef(2,1,1);
+    //glRotatef(22, 0,0,1);
+    glScalef(3, 1, 0.5);
+    drawCube();
+    glPopMatrix();
+
+    // table
+    glColor3f(0.4,0.2,0);
+    glPushMatrix();
+    glTranslatef(2,0,3.5);
+    //glRotatef(22, 0,0,1);
+    glScalef(3, 1, 2);
+    drawCube();
+    glPopMatrix();
+
+    // LEFT sofa
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(-1,0,2);
+    //glRotatef(22, 0,0,1);
+    glScalef(2, 1, 5);
+    drawCube();
+    glPopMatrix();
+
+    // left top sofa
+    glColor3f(0,0,0);
+    glPushMatrix();
+    glTranslatef(-1,1,2);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.5, 1, 5);
+    drawCube();
+    glPopMatrix();
+
+    // bottom sofa
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(2,0,6);
+    //glRotatef(22, 0,0,1);
+    glScalef(3, 1, 2);
+    drawCube();
+    glPopMatrix();
+
+    // bottom top sofa
+    glColor3f(0,0,0);
+    glPushMatrix();
+    glTranslatef(2,1,7.5);
+    //glRotatef(22, 0,0,1);
+    glScalef(3, 1, 0.5);
+    drawCube();
+    glPopMatrix();
 
 /*
     glPushMatrix();
