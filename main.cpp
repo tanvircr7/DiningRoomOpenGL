@@ -10,7 +10,11 @@ double Txval=0,Tyval=0,Tzval=0;
 double windowHeight=1200, windowWidth=1400;
 GLfloat alpha = 0.0, theta = 0.0, axis_x=0.0, axis_y=0.0;
 GLboolean bRotate = false, uRotate = false;
-
+GLdouble eyex=20, eyey=6,eyez=-20,centerx=2,centery=0,centerz=0, upx=0,upy=1,upz=0;
+// original -> 20,6,-20, 2,0,0, 0,1,0
+double scale_x = 1;
+double scale_y = 1;
+double scale_z = 1;
 
 static GLfloat v_cube[8][3] =
 {
@@ -88,8 +92,9 @@ void drawWall()
     {
         glBegin(GL_QUADS);
 
-        if(i!=3) glColor3f(colors[8][0],colors[8][1],colors[8][2]);
-        else glColor3f(colors[1][0],colors[1][1],colors[1][2]);
+        if(i!=3 && i!=1) glColor3f(colors[8][0],colors[8][1],colors[8][2]);
+        else if(i==3) glColor3f(colors[1][0],colors[1][1],colors[1][2]);
+        else glColor3f(colors[2][0],colors[2][1],colors[2][2]);
 
         glVertex3fv(&v_floor[florindices[i][0]][0]);
         glVertex3fv(&v_floor[florindices[i][1]][0]);
@@ -116,6 +121,49 @@ void drawCube()
 
 
 
+void drawtable()
+{
+    glPushMatrix();
+    glScaled(0.2,3.5,0.2);
+    glTranslatef(-10,0,-10);
+    drawCube();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(0.2,3.5,0.2);
+    glTranslatef(10,0,-10);
+    drawCube();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(0.2,3.5,0.2);
+    glTranslatef(-10,0,10);
+    drawCube();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScaled(0.2,3.5,0.2);
+    glTranslatef(10,0,10);
+    drawCube();
+    glPopMatrix();
+
+//    glPushMatrix();
+//    glScaled(4,0.1,2);
+//    glTranslatef(-1,0,1);
+//    drawcube(1,1,1);
+//    glPopMatrix();
+    glPushMatrix();
+    glColor3f(1.0,1.0,1.0);
+    glScalef(1,0,1);
+    glutSolidSphere( 5.0, 10.0, 15.0);
+    glPopMatrix();
+
+}
+
+
+
+
+
 void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -126,7 +174,7 @@ void display(void)
      //gluPerspective(60,1,5,100);
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-    gluLookAt(20,6,-20, 2,0,0, 0,1,0);
+    gluLookAt(eyex,eyey,eyez,centerx,centery,centerz,upx,upy,upz);
     glViewport(0, 0, windowHeight, windowWidth);
 
     //glRotatef(45, 0, 0, 1 );
@@ -135,6 +183,10 @@ void display(void)
     glRotatef(120,0,1,0);
 //     glScalef(1,5,1);
     glTranslatef(0,-10,0);
+
+
+    glScalef(scale_x,scale_y,scale_z);
+
     glRotatef( alpha,axis_x, axis_y, 0.0 );
     glRotatef( theta, axis_x, axis_y, 0.0 );
 
@@ -226,118 +278,360 @@ void display(void)
     drawCube();
     glPopMatrix();
 
+    // door right
+    glColor3f(0.6,0.3,0.0);
+    glPushMatrix();
+    glTranslatef(-4,0,2);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.25, 6, 2.95);
+    drawCube();
+    glPopMatrix();
+
+    // door handle right
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(-4,2.5,4.70);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.5, 1, 0.2);
+    drawCube();
+    glPopMatrix();
+
+    // door left
+    glColor3f(0.6,0.3,0.0);
+    glPushMatrix();
+    glTranslatef(-4,0,5.05);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.25, 6, 2.95);
+    drawCube();
+    glPopMatrix();
+
+    // door handle left
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(-4,2.5,5.10);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.5, 1, 0.2);
+    drawCube();
+    glPopMatrix();
+
 /*
+
+    // table
     glPushMatrix();
-    drawwindow();
-    glRotatef(90,-1,0,0);
-    glTranslatef(0,-16,0);
-    drawwindow();
-    glRotatef(90,-1,0,0);
-    glTranslatef(0,-16,0);
-    drawwindow();
-    glRotatef(90,-1,0,0);
-    glTranslatef(0,-16,0);
-    drawwindow();
+    glTranslatef(11,2.5,2);
+    glRotatef(180,1,0,0);
+    drawtable();
     glPopMatrix();
 
-
-    glTranslatef(0,0,12);
-    glPushMatrix();
-    glScalef(1,1,.668);
-    glTranslatef(0,10,2);
-    drawcube(1);
-    glTranslatef(4,0,0);
-    drawcube(1);
-    glTranslatef(4,0,0);
-    drawcube(1);
-    glPopMatrix();
-
-
-
-    drawcube(1);
-    glTranslatef(4,0,0);
-    drawcube(1);
-    //glScalef(.5,1,1);
-    glTranslatef(4,0,0);
-    drawcube(2);
-
-    glPushMatrix();
-    glTranslatef(0,0,3);
-    drawcube(2);
-    glPopMatrix();
-
-    glTranslatef(4,0,0);
-    drawcube(1);
-
-
-    glTranslatef(-12,0,0);
-    glRotatef(90,0,1,0);
-    drawcube(1);
-    glTranslatef(4,0,0);
-    drawcube(1);
-    glTranslatef(4,0,0);
-    drawcube(1);
 */
-
-//     glTranslatef(5,0,0);
-//
-//     drawWall();
-//     glTranslatef(2,2,2);
-     //drawWall();
- /*
+    // LEFT sofa
+    glColor3f(1,1,1);
     glPushMatrix();
-    glTranslatef(0,0,Tzval);
+    glTranslatef(10.95,0,4.5);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.10, 1, 0.10);
+    drawCube();
+    glPopMatrix();
 
-    glRotatef( alpha,axis_x, axis_y, 0.0 );
-    glRotatef( theta, axis_x, axis_y, 0.0 );
-    drawWall();
+
+    // LEFT sofa TOP
+    glColor3f(1.0, 0.5, 0.0);
+    glPushMatrix();
+    glTranslatef(10.5,1,4);
+    //glRotatef(22, 0,0,1);
+    glScalef(1, 0.1, 1);
+    drawCube();
     glPopMatrix();
-*/
-   /*
-     glPushMatrix();
-        glTranslatef(0,0,Tzval);
-        glScalef(3,3,3);
-        glutSolidCube(1);
+
+
+    // left below sofa
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(10.95,0,8.5);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.10, 1, 0.10);
+    drawCube();
     glPopMatrix();
-  */
+
+
+    // left below sofa TOP
+    glColor3f(1.0, 0.5, 0.0);
+    glPushMatrix();
+    glTranslatef(10.5,1,8);
+    //glRotatef(22, 0,0,1);
+    glScalef(1, 0.1, 1);
+    drawCube();
+    glPopMatrix();
+
+    //------------------------------------
+
+    // RIght sofa
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(16.95,0,4.5);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.10, 1, 0.10);
+    drawCube();
+    glPopMatrix();
+
+
+    // right sofa TOP
+    glColor3f(1.0, 0.5, 0.0);
+    glPushMatrix();
+    glTranslatef(16.5,1,4);
+    //glRotatef(22, 0,0,1);
+    glScalef(1, 0.1, 1);
+    drawCube();
+    glPopMatrix();
+
+
+    // right below sofa
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(16.95,0,8.5);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.10, 1, 0.10);
+    drawCube();
+    glPopMatrix();
+
+
+    // right below sofa TOP
+    glColor3f(1.0, 0.5, 0.0);
+    glPushMatrix();
+    glTranslatef(16.5,1,8);
+    //glRotatef(22, 0,0,1);
+    glScalef(1, 0.1, 1);
+    drawCube();
+    glPopMatrix();
+
+
+    // table
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(13.85,0,6);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.50, 1, 0.50);
+    drawCube();
+    glPopMatrix();
+
+
+
+    // table top
+    glColor3f(1.0, 0.5, 0.0);
+    glPushMatrix();
+    glTranslatef(12,1,4);
+    //glRotatef(22, 0,0,1);
+    glScalef(4,0.1,5);
+    drawCube();
+    glPopMatrix();
+
+
     glFlush();
     glutSwapBuffers();
 }
+
+
+double limit = 360;
+double roll_value = 0.2;
+GLfloat angleYaw = 90.0, anglePitch = 270.0, angleRoll = 90.0;
+GLfloat angleYawLimit1 = 180.0, anglePitchLimit1 = 360.0, angleRollLimit1 = 270.0;
+GLfloat angleYawLimit2 = 0.0, anglePitchLimit2 = 180.0, angleRollLimit2 = -90.0;
+int f=0;
+
+int bv = 0;
+
+
+
+void b_swap()
+{
+    if(bv==1)
+    {
+        int tmp = eyey;
+        eyey = eyez;
+        eyez = tmp;
+
+        tmp = upy;
+        upy = upz;
+        upz = tmp;
+
+    }
+}
+
+void init(int d)
+{
+    if(d!=f)
+    {
+        angleYaw = 90.0;
+        anglePitch = 90.0;
+        angleRoll = 90.0;
+        eyex = 20;
+        eyey = 6;
+        eyez = -20;
+        centerx = 2;
+        centery = 0;
+        centerz = 0;
+        upx = 0;
+        upy = 1;
+        upz = 0;
+        f=d;
+        scale_x=1.5;
+        scale_y=1.5;
+        scale_z=1.5;
+    }
+    b_swap();
+}
+
+void setCameraEye_Yaw() // y axis , y u
+{
+    init(1);
+    f=1;
+    centery = 200.0*(cos(angleYaw*3.1416/180.0));
+}
+
+void setCameraEye_Roll() // z axis ,i o
+{
+    init(2);
+    f=2;
+    upx = 200.0*(cos(angleRoll*3.1416/180.0));//-sin(angleYaw*3.1416/180.0));
+    upy = 200.0*(sin(angleRoll*3.1416/180.0));//+cos(angleYaw*3.1416/180.0));
+}
+
+void setCameraEye_Pitch() // x axis , r t
+{
+    init(3);
+    f=3;
+
+    centerx = 400.0*(cos(anglePitch*3.1416/180.0));
+}
+
+
+
 
 
 void myKeyboardFunc( unsigned char key, int x, int y )
 {
     switch ( key )
     {
-    case 's':
-    case 'S':
-        bRotate = !bRotate;
-        uRotate = false;
+    case 'r':
+        if(anglePitch>=anglePitchLimit1)
+                break;
+        anglePitch += roll_value;
+
+        //printf("%lf  p\n ", anglePitch);
+        //if(anglePitch > limit)
+        //    anglePitch -= limit;
+        setCameraEye_Pitch();
+        glutPostRedisplay();
+
+        // eyex = eyex;
+
+        break;
+    case 't':
+        if(anglePitch==anglePitchLimit2)
+                break;
+        anglePitch -= roll_value;
+        //if(anglePitch < 0)
+         //   anglePitch += limit;
+        setCameraEye_Pitch();
+        glutPostRedisplay();
+        break;
+    case 'y':
+        if(angleYaw==angleYawLimit1)
+            break;
+        angleYaw += roll_value;
+        //if(angleYaw > limit)
+        //    angleYaw -= limit;
+        setCameraEye_Yaw();
+        //setCameraEye_Yaw();
+        glutPostRedisplay();
+
+        // eyex = eyex;
+        break;
+    case 'u':
+        if(angleYaw==angleYawLimit2)
+            break;
+        angleYaw -= roll_value;
+        //if(angleYaw < 0)
+         //   angleYaw += limit;
+        setCameraEye_Yaw();
+        //setCameraEye_Yaw();
+        glutPostRedisplay();
+        break;
+    case 'i':
+        //if(angleRoll>=angleRollLimit1)
+         //   break;
+        angleRoll += roll_value;
+        //if(angleRoll >= limit)
+        //    angleRoll -= limit;
+        printf("%lf\n", angleRoll);
+        setCameraEye_Roll();
+        //setCameraEye_Yaw();
+        glutPostRedisplay();
+
+        // eyex = eyex;
+        break;
+    case 'o':
+        //if(angleRoll<=angleRollLimit2)
+         //   break;
+        angleRoll -= roll_value;
+        //if(angleRoll < 0)
+        //    angleRoll += limit;
+        setCameraEye_Roll();
+        //setCameraEye_Yaw();
+        glutPostRedisplay();
+        break;
+
+
+    case '@':
+       bRotate = !bRotate;
+              // uRotate = false;
         axis_x=0.0;
         axis_y=1.0;
+
         break;
 
-    case 'r':
-    case 'R':
-        uRotate = !uRotate;
+
+   case '#':
+        uRotate = !uRotate;/**<  */
         bRotate = false;
-        axis_x=1.0;
+       axis_x=1.0;
         axis_y=0.0;
+
+       break;
+
+    case 'z':
+        //eyez-=2;
+        //init(4);
+        f=4;
+        scale_x+=0.05;
+        scale_y+=0.05;
+        scale_z+=0.05;
+        glutPostRedisplay();
         break;
-    case '+':
-        Tzval+=0.2;
+    case 'c':
+        //eyez-=2;
+        //init(4);
+        f=4;
+        if(scale_x==0.05)break;
+        scale_x-=0.05;
+        scale_y-=0.05;
+        scale_z-=0.05;
+        glutPostRedisplay();
         break;
 
-    case '-':
-        Tzval-=0.2;
-        break;
-
-    case 27:  // Escape key
+    case 27:	// Escape key
         exit(1);
     }
-
-
 }
+
+/*
+r, t => pitch
+y, u => Yaw
+i, o => roll
+c, z => scaling
+
+*/
+
 
 
 void animate()
