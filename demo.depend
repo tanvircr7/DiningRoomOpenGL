@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1663574862 source:f:\glstuff\newproject\demo\main.cpp
+1665094562 source:f:\glstuff\newproject\demo\main.cpp
 	<GL/gl.h>
 	<GL/glu.h>
 	<GL/glut.h>

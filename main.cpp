@@ -10,7 +10,7 @@ double Txval=0,Tyval=0,Tzval=0;
 double windowHeight=1200, windowWidth=1400;
 GLfloat alpha = 0.0, theta = 0.0, axis_x=0.0, axis_y=0.0;
 GLboolean bRotate = false, uRotate = false;
-GLdouble eyex=20, eyey=6,eyez=-20,centerx=2,centery=0,centerz=0, upx=0,upy=1,upz=0;
+GLdouble eyex=30, eyey=6,eyez=-20,centerx=2,centery=0,centerz=0, upx=0,upy=1,upz=0;
 // original -> 20,6,-20, 2,0,0, 0,1,0
 double scale_x = 1;
 double scale_y = 1;
@@ -192,6 +192,33 @@ void display(void)
 
     drawWall();
 
+
+    // tiles outline
+    glColor3f(.8,.7,.2);
+    glPushMatrix();
+    glTranslatef(-4,0,0);
+    //glRotatef(22, 0,0,1);
+    glScalef(13, 0.002, 10);
+    drawCube();
+    glPopMatrix();
+    //tiles
+    int start_point=-1;
+    for(int k=9;k<20;k++){
+
+        start_point = (start_point+1)%2;
+
+        for (int i=0;i<10;i+=2){
+            glColor3f(.8,.7,.2);
+            glPushMatrix();
+
+            glTranslatef(k,0,i+start_point);
+            //glRotatef(22, 0,0,1);
+            glScalef(1, 0.002, 1);
+            drawCube();
+            glPopMatrix();
+        }
+
+    }
 
 
 
