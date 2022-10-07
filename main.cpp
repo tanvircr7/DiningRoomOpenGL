@@ -161,6 +161,62 @@ void drawtable()
 }
 
 
+void chair() {
+    //legs left top
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glTranslatef(0,0,0);
+    glScaled(0.2,1,0.2);
+    drawCube();
+    glPopMatrix();
+
+
+    //legs left bottom
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glTranslatef(0,0,1);
+    glScaled(0.2,1,0.2);
+    drawCube();
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glTranslatef(1,0,0);
+    glScaled(0.2,1,0.2);
+    drawCube();
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glTranslatef(1,0,1);
+    glScaled(0.2,1,0.2);
+    drawCube();
+    glPopMatrix();
+
+    // seat
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glTranslatef(0,1,0);
+    glScaled(1.5,0.02,1);
+    drawCube();
+    glPopMatrix();
+
+    // backrest
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glTranslatef(0,1,0);
+    glScaled(0.02,1.5,1);
+    drawCube();
+    glPopMatrix();
+
+}
+
+
+
+
+
 
 
 
@@ -351,6 +407,7 @@ void display(void)
     glPopMatrix();
 
 */
+/*
     // LEFT sofa
     glColor3f(1,1,1);
     glPushMatrix();
@@ -389,6 +446,7 @@ void display(void)
     glScalef(1, 0.1, 1);
     drawCube();
     glPopMatrix();
+
 
     //------------------------------------
 
@@ -430,14 +488,14 @@ void display(void)
     glScalef(1, 0.1, 1);
     drawCube();
     glPopMatrix();
-
+*/
 
     // table
     glColor3f(1,1,1);
     glPushMatrix();
     glTranslatef(13.85,0,6);
     //glRotatef(22, 0,0,1);
-    glScalef(0.50, 1, 0.50);
+    glScalef(0.50, 1.5, 0.50);
     drawCube();
     glPopMatrix();
 
@@ -446,12 +504,78 @@ void display(void)
     // table top
     glColor3f(1.0, 0.5, 0.0);
     glPushMatrix();
-    glTranslatef(12,1,4);
+    glTranslatef(12,1.5,4);
     //glRotatef(22, 0,0,1);
     glScalef(4,0.1,5);
     drawCube();
     glPopMatrix();
 
+
+    // left top chair
+    glPushMatrix();
+    glTranslatef(11,0,4.5);
+    chair();
+    glPopMatrix();
+
+    // left bottom chair
+    glPushMatrix();
+    glTranslatef(11,0,7.5);
+    chair();
+    glPopMatrix();
+
+    // right top chair
+    glPushMatrix();
+    glRotatef(0,1,0,180);
+    glTranslatef(15.5,0,4.5);
+    chair();
+    glPopMatrix();
+
+
+
+    // cupboards
+    glColor3f(1.0, 0.5, 0.0);
+    glPushMatrix();
+    glTranslatef(16,0,2);
+    //glRotatef(22, 0,0,1);
+    glScalef(4,2,1);
+    drawCube();
+    glPopMatrix();
+
+    // cupboards
+    glColor3f(1.0, 0.5, 0.0);
+    glPushMatrix();
+    glTranslatef(19,0,3);
+    //glRotatef(22, 0,0,1);
+    glScalef(1,2,5);
+    drawCube();
+    glPopMatrix();
+
+    // cupboards DOOR TOP
+    glColor3f(1.0, 0, 0);
+    glPushMatrix();
+    glTranslatef(18.95,0.2,3.2);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.02,1.5,1);
+    drawCube();
+    glPopMatrix();
+
+    // cupboards DOOR MIDDLE
+     glColor3f(1.0, 0, 0.0);
+    glPushMatrix();
+    glTranslatef(18.95,0.2,4.9);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.02,1.5,1);
+    drawCube();
+    glPopMatrix();
+
+    // cupboards DOOR BOTTOM
+     glColor3f(1.0, 0, 0.0);
+    glPushMatrix();
+    glTranslatef(18.95,0.2,6.6);
+    //glRotatef(22, 0,0,1);
+    glScalef(0.02,1.5,1);
+    drawCube();
+    glPopMatrix();
 
     glFlush();
     glutSwapBuffers();
