@@ -8,7 +8,8 @@
 
 double Txval=0,Tyval=0,Tzval=0;
 double windowHeight=1200, windowWidth=1400;
-GLfloat alpha = 0.0, theta = 0.0, axis_x=0.0, axis_y=0.0;
+GLfloat alpha = 0.0, theta = 0.0, gamma = 0.0, axis_x=0.0, axis_y=0.0;
+bool fan4=false;
 
 GLdouble eyex=30, eyey=6,eyez=-20,centerx=2,centery=0,centerz=0, upx=0,upy=1,upz=0;
 // original -> 20,6,-20, 2,0,0, 0,1,0
@@ -271,35 +272,12 @@ void drawFan(GLfloat r=0,GLfloat g=0,GLfloat b=0,GLboolean emission=false) {
 
 
     glPushMatrix();
-    glTranslatef(9.48,8,4.48);
-    //glRotatef(-90,1,0,0);
-    glScalef(0.1,1,0.1);
-    drawCube(1,1,1);
-    glPopMatrix();
+
+    glTranslatef(0,0,0);
+    glScalef(0.1,0.1,1);
+    drawCube();
 
 
-    glPushMatrix();
-    glTranslatef(9.48,7.95,4.48);
-    //glRotatef(-90,1,0,0);
-    //glScalef(0.1,1,0.1);
-    glScalef(1,0,1);
-    glutSolidSphere( 0.5, 10.0, 15.0);
-
-    glPopMatrix();
-
-
-    glPushMatrix();
-    glTranslatef(7.98,7.95,4.48);
-    //glRotatef(-90,1,0,0);
-    glScalef(3,0.02,0.1);
-    drawCube(1,1,1);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(9.48,7.95,2.98);
-    //glRotatef(-90,1,0,0);
-    glScalef(0.1,0.02,3);
-    drawCube(1,1,1);
     glPopMatrix();
 
 
@@ -499,7 +477,7 @@ void display(void)
     }
 
 
-
+    {
     // right sofa
     //(1,1,1);
     glPushMatrix();
@@ -619,7 +597,12 @@ void display(void)
     drawCube();
     glPopMatrix();
 
+    }
+
     //-------------------------------------
+
+    {
+
     // table
     //(1,1,1);
     glPushMatrix();
@@ -728,6 +711,7 @@ void display(void)
     drawCube(.2,.1,.2);
     glPopMatrix();
 
+    }
     // =========================================
     // ceiling bar |
     glPushMatrix();
@@ -750,10 +734,29 @@ void display(void)
 
     // Fans ==================================
     glPushMatrix();
-    //glTranslatef(-4,9,4.25);
-    //glRotatef(22, 0,0,1);
-    //glScalef(24,0.5,.5);
-    drawFan(0.3,.3,.4);
+
+    // Fan holder
+    glPushMatrix();
+    glTranslatef(9.48,8,4.48);
+    //glRotatef(-90,1,0,0);
+    glScalef(0.1,1,0.1);
+    drawCube(1,1,1);
+    glPopMatrix();
+
+
+    glTranslatef(9.5,7.80,4.4);
+    glRotatef( gamma,0, 1, 0 );
+    drawFan(1,1,1);
+    glRotatef(90,0, 1, 0 );
+    drawFan(1,1,1);
+    glRotatef(90,0, 1, 0 );
+    drawFan(1,1,1);
+    glRotatef(90,0, 1, 0 );
+    drawFan(1,1,1);
+
+
+
+
     glPopMatrix();
 
 
@@ -778,7 +781,7 @@ void display(void)
 
     light(17.75,8.83,4.5,light0,GL_LIGHT0,false,false);
     light(3.5,8,4.5,light1,GL_LIGHT1,true,false);
-    light(18,7,7,light2,GL_LIGHT2,false,true);
+    light(18,12,15,light2,GL_LIGHT2,false,true);
 
     glFlush();
     glutSwapBuffers();
@@ -987,6 +990,11 @@ void myKeyboardFunc( unsigned char key, int x, int y )
         glutPostRedisplay();
         break;
 
+    case '4':
+        fan4 = !fan4;
+        glutPostRedisplay();
+        break;
+
     case 27:	// Escape key
         exit(1);
     }
@@ -1017,6 +1025,14 @@ void animate()
         if(alpha > 360.0)
             alpha -= 360.0*floor(alpha/360.0);
     }
+
+    if (fan4 == true )
+    {
+        gamma += 1;
+        if(gamma > 360.0);
+            gamma -= 360.0 * floor(gamma/360.0);
+    }
+
     glutPostRedisplay();
 
 }
